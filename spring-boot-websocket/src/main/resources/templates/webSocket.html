@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>集成WebSocket示例</title>
+</head>
+<body>
+<div>
+    <button id="connect" onclick="connect();">连接</button>
+    <button id="disconnect" onclick="disconnect();">断开连接</button>
+    <button id="serverTimeId" onclick="getServerTime();">获取服务器端时间</button>
+    <hr/>
+    <span id="showServerTime"></span>
+</div>
+<script type="text/javascript" src="sockjs.min.js"></script>
+<script type="text/javascript" src="stomp.min.js"></script>
+<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script type="text/javascript">
+    var stompClient = null;
+    $(function(){
+        setConnect(false);
+    });
+    function setConnect(connected){
+        $("#connect").attr({disabled:connected});
+        $("#disconnect").attr({disabled:!connected});
+    }
+    function connect() {
+        var socket = new SockJS('/endpointSocket');
+        //创建STOMP客户端连接，目标地址为/endpointSocket的STOMP代理
+        stompClient = Stomp.over(socket);
+        //打印stomp输出信息
+        stompClient.debug = function(str) {
+            console.log(str + "\n");
+        };
+        //建立连接
+        stompClient.connect({},function(frame) {
+            setConnect(true);
+            //连接成功后订阅/topic/getResponse目标发送的消息，该地址在Controller中用@SendTo指定
+            stompClient.subscribe('/topic/getResponse', function(response) {
+                showResponse(JSON.parse(response.body).responseMessage);
+            });
+        });
+    }
+
+    function disconnect() {
+        if(stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnect(false);
+    }
+    function getServerTime() {
+        var message = "The server time is : ";
+        //发送消息到服务端，/getServerTime地址是由Controller中的@MessageMapping指定
+        stompClient.send("/getServerTime",{},JSON.stringify({'message':message}));
+    }
+
+    function showResponse(message){
+        var response = $("#showServerTime");
+        response.html(message);
+    }
+
+</script>
+</body>
+</html>
+
