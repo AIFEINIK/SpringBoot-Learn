@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="actionApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width", initial-scale="1">
+    <title>Title</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div id="navbar" class="collapse navbar-collapse ">
+                    <ul class="nav navbar-nav ">
+                        <li> <a href="#/oper">后台交互</a> </li>
+                        <li> <a href="#/directive">自定义指令</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <hr/><p></p>
+    <div style="margin-top: 100px">
+        <ng-view></ng-view>
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular/angular-route.min.js"></script>
+    <script src="bower_components/js/app.js"></script>
+    <script src="bower_components/js/controllers.js"></script>
+    <script src="bower_components/js/directive.js"></script>
+</body>
+</html>
