@@ -1,0 +1,46 @@
+server:
+    port: 9100
+    contextPath: /mybatis
+    session:
+        timeout: 1200
+
+spring:
+    application:
+        name: spring-boot-mybatis
+
+datasource:
+    master:
+        name: master
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8
+        username: root
+        password: root
+        maxTotal: 200
+        maxIdle: 8
+        minIdle: 8
+        initialSize: 10
+        maxWaitMillis: 3000
+        validationQuery: select 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+
+    slave:
+            name: slave
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8
+            username: root
+            password: root
+            maxTotal: 200
+            maxIdle: 8
+            minIdle: 8
+            initialSize: 10
+            maxWaitMillis: 3000
+            validationQuery: select 1
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+
+mybatis:
+    config-location: classpath:mybatis-config.xml
+
