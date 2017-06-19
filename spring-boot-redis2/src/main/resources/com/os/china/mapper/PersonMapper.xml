@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.os.china.mapper.PersonMapper">
+
+	<resultMap id="personMap" type="person">
+		<id column="id" property="id" />
+		<result column="name" property="username" />
+		<result column="age" property="age" />
+		<result column="address" property="address" />
+	</resultMap>
+
+	<select id="getById" resultMap="personMap">
+		select id, name, age, address from person where id = #{id};
+	</select>
+
+	<select id="getPersonByName" resultMap="personMap">
+		select id, name, age, address from person where name = #{username};
+	</select>
+
+	<insert id="savePerson" parameterType="person" useGeneratedKeys="true" keyProperty="id">
+		insert into person(name, age, address) value (#{username}, #{age}, #{address})
+	</insert>
+
+    <select id="existPersonName" parameterType="person" resultType="int">
+        select count(1) from person where name = #{username}
+        <if test="id > 0">and id != #{id}</if>
+    </select>
+
+    <delete id="removePersonByName">
+        delete from person where name = #{username}
+    </delete>
+
+</mapper>
